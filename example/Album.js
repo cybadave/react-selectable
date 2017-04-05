@@ -3,14 +3,12 @@ import React from 'react';
 const Album = ({
 	selected,
 	title,
-	year
+	year,
+	idx,
 }) => {
 	const classes = selected ? 'item selected' : 'item';
 	return (
-		<div className={classes}>
-			<h2>{title}</h2>
-			<small>{year}</small>
-		</div>
+		<rect width="200" height="200" x={(idx % 4) * 210} y={Math.floor(idx / 4) * 210 } />
 	)
 };
 

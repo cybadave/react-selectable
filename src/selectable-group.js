@@ -76,8 +76,8 @@ class SelectableGroup extends React.Component {
 	    	isBoxSelecting: true,
 	    	boxWidth: w,
 	    	boxHeight: h,
-	    	boxLeft: Math.min(e.pageX, this._mouseDownData.initialW),
-	    	boxTop: Math.min(e.pageY, this._mouseDownData.initialH)
+	    	boxLeft: Math.min(e.pageX, this._mouseDownData.initialW) - this.props.leftOffset,
+	    	boxTop: Math.min(e.pageY, this._mouseDownData.initialH) - document.getElementById(this.props.containerSelector).getClientRects()[0].top + document.getElementById(this.props.containerSelector).scrollTop,
 	    });
 
 		if (this.props.selectOnMouseMove) this._throttledSelect(e);
@@ -160,6 +160,7 @@ class SelectableGroup extends React.Component {
 		      {tolerance} = this.props;
 
 		if(!selectbox) return;
+		debugger;
 
 		this._registry.forEach(itemData => {
 			if(itemData.domNode && doObjectsCollide(selectbox, itemData.domNode, tolerance)) {
@@ -258,6 +259,7 @@ SelectableGroup.propTypes = {
 
 SelectableGroup.defaultProps = {
 	onSelection: () => {},
+  leftOffset: 0,
 	component: 'div',
 	tolerance: 0,
 	fixedPosition: false,

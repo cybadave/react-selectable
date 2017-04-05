@@ -199,8 +199,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					isBoxSelecting: true,
 					boxWidth: w,
 					boxHeight: h,
-					boxLeft: Math.min(e.pageX, this._mouseDownData.initialW),
-					boxTop: Math.min(e.pageY, this._mouseDownData.initialH)
+					boxLeft: Math.min(e.pageX, this._mouseDownData.initialW) - this.props.leftOffset,
+					boxTop: Math.min(e.pageY, this._mouseDownData.initialH) - document.getElementById(this.props.containerSelector).getClientRects()[0].top + document.getElementById(this.props.containerSelector).scrollTop
 				});
 
 				if (this.props.selectOnMouseMove) this._throttledSelect(e);
@@ -283,12 +283,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: '_selectElements',
 			value: function _selectElements(e) {
-				var currentItems = [];
-				var selectbox = _reactDom2.default.findDOMNode(this.refs.selectbox);
-				var tolerance = this.props.tolerance;
+				var currentItems = [],
+				    selectbox = _reactDom2.default.findDOMNode(this.refs.selectbox),
+				    tolerance = this.props.tolerance;
 
 
 				if (!selectbox) return;
+				debugger;
 
 				this._registry.forEach(function (itemData) {
 					if (itemData.domNode && (0, _doObjectsCollide2.default)(selectbox, itemData.domNode, tolerance)) {
@@ -394,6 +395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	SelectableGroup.defaultProps = {
 		onSelection: function onSelection() {},
+		leftOffset: 0,
 		component: 'div',
 		tolerance: 0,
 		fixedPosition: false,
@@ -453,7 +455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Given a node, get everything needed to calculate its boundaries
-	 * @param  {HTMLElement} node 
+	 * @param  {HTMLElement} node
 	 * @return {Object}
 	 */
 	exports.default = function (node) {
@@ -462,9 +464,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		return {
 			top: rect.top + document.body.scrollTop,
 			left: rect.left + document.body.scrollLeft,
-			offsetWidth: node.offsetWidth,
-			offsetHeight: node.offsetHeight
-		};
+			offsetWidth: rect.width, //node.offsetWidth,
+			offsetHeight: rect.height };
 	};
 
 /***/ },
@@ -513,15 +514,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Given two objects containing "top", "left", "offsetWidth" and "offsetHeight"
-	 * properties, determine if they collide. 
+	 * properties, determine if they collide.
 	 * @param  {Object|HTMLElement} a
-	 * @param  {Object|HTMLElement} b	 
+	 * @param  {Object|HTMLElement} b
 	 * @return {bool}
 	 */
 
 	exports.default = function (a, b, tolerance) {
-	  var aObj = a instanceof HTMLElement ? (0, _getBoundsForNode2.default)(a) : a,
-	      bObj = b instanceof HTMLElement ? (0, _getBoundsForNode2.default)(b) : b;
+	  var aObj = a instanceof HTMLElement || a instanceof SVGElement ? (0, _getBoundsForNode2.default)(a) : a,
+	      bObj = b instanceof HTMLElement || b instanceof SVGElement ? (0, _getBoundsForNode2.default)(b) : b;
 
 	  return coordsCollide(aObj.top, aObj.left, bObj.top, bObj.left, aObj.offsetWidth, aObj.offsetHeight, bObj.offsetWidth, bObj.offsetHeight, tolerance);
 	};
@@ -532,7 +533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	/**
 	 * lodash (Custom Build) <https://lodash.com/>

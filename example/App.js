@@ -51,7 +51,7 @@ class App extends React.Component {
 
 
 	clearItems (e) {
-		if(!isNodeInRoot(e.target, this.refs.selectable)) {
+		if(!isNodeInRoot(e.target, document.getElementById('sg'))) {
 			this.setState({
 				selectedItems: []
 			});
@@ -76,7 +76,7 @@ class App extends React.Component {
 			<div>
 				<h1>React Selectable Demo</h1>
 				<div className="sidebar">
-					<div className="info">						
+					<div className="info">
 						<strong>Tolerance</strong>: <span>{this.state.tolerance}</span><br/>
 						<em>The number of pixels that must be in the bounding box in order for an item to be selected.</em>
 						<p><input type="range" min="0" max="50" step="1" onChange={this.handleToleranceChange} value={this.state.tolerance} /></p>
@@ -99,28 +99,35 @@ class App extends React.Component {
 						</ul>
 					</div>
 				</div>
-				<SelectableGroup
-					className="main" 
-					ref="selectable"
-					onSelection={this.handleSelection} 
-					tolerance={this.state.tolerance}
-					selectOnMouseMove={this.state.selectOnMouseMove}>
-				
-				{this.props.items.map((item, i) => {
-					const selected = this.state.selectedItems.indexOf(i) > -1;
-					return (
-						<SelectableAlbum
-							selectableKey={i}
-							key={i} 
-							title={item.title} 
-							year={item.year} 
-							selected={selected} />
-					);
-				})}
-				</SelectableGroup>
+				<div className="scrolly" id="scrolly">
+					<SelectableGroup
+						containerSelector="scrolly"
+						id="sg"
+						leftOffset="28"
+						className="main"
+						ref="selectable"
+						onSelection={this.handleSelection}
+						tolerance={this.state.tolerance}
+						selectOnMouseMove={this.state.selectOnMouseMove}>
+					<svg height="1470" width="840" >
+					{this.props.items.map((item, i) => {
+						const selected = this.state.selectedItems.indexOf(i) > -1;
+						return (
+							<SelectableAlbum
+								selectableKey={i}
+								key={i}
+								idx={i}
+								title={item.title}
+								year={item.year}
+								selected={selected} />
+						);
+					})}
+					</svg>
+					</SelectableGroup>
+				</div>
 			</div>
 
-		);		
+		);
 	}
 }
 
