@@ -160,7 +160,6 @@ class SelectableGroup extends React.Component {
 		      {tolerance} = this.props;
 
 		if(!selectbox) return;
-		debugger;
 
 		this._registry.forEach(itemData => {
 			if(itemData.domNode && doObjectsCollide(selectbox, itemData.domNode, tolerance)) {

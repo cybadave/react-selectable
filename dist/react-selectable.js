@@ -289,7 +289,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 				if (!selectbox) return;
-				debugger;
 
 				this._registry.forEach(function (itemData) {
 					if (itemData.domNode && (0, _doObjectsCollide2.default)(selectbox, itemData.domNode, tolerance)) {
