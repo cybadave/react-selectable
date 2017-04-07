@@ -215,7 +215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: '_mouseDown',
 			value: function _mouseDown(e) {
 				// Disable if target is control by react-dnd (changed to getAttribute to support svg elements)
-				if (!!e.target.getAttribute('draggable')) return;
+				if (!!e.target.getAttribute('data-draggable')) return;
 
 				var node = _reactDom2.default.findDOMNode(this);
 				var collides = void 0,
