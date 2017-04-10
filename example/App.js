@@ -112,6 +112,7 @@ class App extends React.Component {
 					<svg height="1470" width="840" >
 					{this.props.items.map((item, i) => {
 						const selected = this.state.selectedItems.indexOf(i) > -1;
+						const draggable = i > 1;
 						return (
 							<SelectableAlbum
 								selectableKey={i}
@@ -119,7 +120,8 @@ class App extends React.Component {
 								idx={i}
 								title={item.title}
 								year={item.year}
-								selected={selected} />
+								selected={selected}
+								draggable={draggable} />
 						);
 					})}
 					</svg>

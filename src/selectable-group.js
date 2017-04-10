@@ -90,7 +90,10 @@ class SelectableGroup extends React.Component {
 	 */
 	_mouseDown (e) {
 		// Disable if target is control by react-dnd (changed to getAttribute to support svg elements)
-		if (!!e.target.getAttribute('data-draggable')) return;
+    console.log('data-draggable', e.target.getAttribute('data-draggable'));
+		if (e.target.getAttribute('data-draggable')){
+      return false;
+		}
 
 		const node = ReactDOM.findDOMNode(this);
 		let collides, offsetData, distanceData;
